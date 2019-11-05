@@ -1,0 +1,35 @@
+{
+  "name": "sampleOB",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node src/server.js",
+    "migrate": "sequelize db:migrate",
+    "migrate:undo": "sequelize db:migrate:undo:all",
+    "seed": "sequelize db:seed:all",
+    "db:reset": "npm run migrate:undo && npm run migrate && npm run seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "nodemon": "^1.19.4"
+  },
+  "dependencies": {
+    "camunda-external-task-client-js": "^1.2.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "i": "^0.3.6",
+    "npm": "^6.12.0",
+    "path": "^0.12.7",
+    "pg": "^7.12.1",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^5.21.2"
+  }
+}
