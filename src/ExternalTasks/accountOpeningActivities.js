@@ -6,7 +6,9 @@ const accountOpeningActivities = {
     client.subscribe("Start post account", async function ({ task, taskService }) {
       try {
         await taskService.complete(task);
+        console.log('task completed');
       } catch(error) {
+        console.log('something happend');
         errorHandler(error, taskService, task);
       }
     });
