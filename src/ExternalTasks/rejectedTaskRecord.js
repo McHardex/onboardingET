@@ -1,5 +1,6 @@
 import { client } from '../helpers/client';
 import { errorHandler, taskError } from '../helpers/errorHandler';
+import saveToDb from '../models';
 
 const rejectedTask = {
   record: () => {
@@ -7,6 +8,7 @@ const rejectedTask = {
       try {
         const variable = task.variables.get("IsCompApproved");
         if (variable === false) {
+          await saveToDb('RejectedTask', task);
           await taskService.complete(task, variable);
         } else {
           taskError(taskService);

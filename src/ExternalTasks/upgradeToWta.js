@@ -1,5 +1,6 @@
 import { client } from '../helpers/client';
 import { errorHandler, taskError } from '../helpers/errorHandler';
+import saveToDb from '../helpers/saveToDb';
 
 const upgradeToWta = {
   upgrade: () => {
@@ -7,6 +8,7 @@ const upgradeToWta = {
       try {
         const variable = task.variables.get("requestcheq");
         if (variable) {
+          await saveToDb('upgrade', task);
           await taskService.complete(task, variable);
         } else {
           taskError(taskService);

@@ -1,6 +1,6 @@
 import { Variables } from "camunda-external-task-client-js";
 import { client } from '../helpers/client';
-import db from '../models';
+import saveToDb from '../helpers/saveToDb';
 import { errorHandler } from '../helpers/errorHandler';
 
 
@@ -9,12 +9,7 @@ const createAccount = {
     client.subscribe("Create Account", async function ({ task, taskService }) {
       let variable = new Variables();       
       try {
-        const userDetails = task.variables.getAll();
-
-        await db.CreateAccount.create({
-          processId: task.processInstanceId,
-          userDetails
-        });
+        await saveToDb('CreateAccount', task);
 
         variable.set("accCreated", true);        
         await taskService.complete(task, variable);
