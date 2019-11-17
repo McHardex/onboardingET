@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const ExternalTasks = sequelize.define('ExternalTasks', {
-    id: DataTypes.UUID,
+    taskId: DataTypes.UUID,
     topicName: DataTypes.STRING,
     inputVariable: DataTypes.JSONB,
     readyForPickup: DataTypes.STRING,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     processInstanceId: DataTypes.UUID,
     suspended: DataTypes.BOOLEAN,
     workerId: DataTypes.STRING,
-    priority: DataTypes,INTEGER,
+    priority: DataTypes.INTEGER,
     businessKey: DataTypes.UUID,
     retries: DataTypes.INTEGER,
     errorMessage: DataTypes.STRING,
@@ -26,4 +26,3 @@ module.exports = (sequelize, DataTypes) => {
   };
   return ExternalTasks;
 };
-

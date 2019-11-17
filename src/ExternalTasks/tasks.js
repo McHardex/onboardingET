@@ -21,10 +21,10 @@ const ExternalTask = {
 
             !subList.includes(tasks) &&
               client.subscribe(tasks, async function ({ task, taskService }) {
-                console.log(task, 'task');
+                // console.log(task, 'task');
                 // let variable = new Variables();
                 // try {
-                // await saveToDb('CreateAccount', task);
+                await saveToDb(task);
 
                 //   variable.set("accCreated", true);
                 //   await taskService.complete(task, variable);

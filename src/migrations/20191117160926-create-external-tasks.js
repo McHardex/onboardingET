@@ -4,6 +4,11 @@ module.exports = {
       id: {
         allowNull: false,
         primaryKey: true,
+        autoIncrement: true,
+        type: Sequelize.INTEGER
+      },
+      taskId: {
+        allowNull: false,
         type: Sequelize.UUID
       },
       topicName: {
@@ -18,7 +23,7 @@ module.exports = {
       readyForPickup: {
         allowNull: true,
         type: Sequelize.STRING,
-        default: "N"
+        defaultValue: "N"
       },
       responseCode: {
         allowNull: true,
