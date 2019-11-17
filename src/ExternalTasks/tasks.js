@@ -4,7 +4,7 @@ import saveToDb from '../helpers/saveToDb';
 import { errorHandler } from '../helpers/errorHandler';
 import fetchExternalTasks from '../helpers/getExternalTasks';
  
-const createAccount = {
+const ExternalTask = {
   startProcess: async () => {
     let topicNames = new Set();
     let subscribedTopics = new Set();
@@ -21,6 +21,7 @@ const createAccount = {
 
             !subList.includes(tasks) &&
               client.subscribe(tasks, async function ({ task, taskService }) {
+                console.log(task, 'task');
                 // let variable = new Variables();
                 // try {
                 // await saveToDb('CreateAccount', task);
@@ -32,11 +33,12 @@ const createAccount = {
                 //   await taskService.complete(task, variable);
                 //   errorHandler(error, taskService, task);
                 // };
+
               });
             subscribedTopics.add(tasks);
           }
         } else {
-          console.log('No Active tasks yet');
+          console.log('No Active task yet');
         }
       } catch (error) {
         console.log(error.message);
@@ -45,23 +47,4 @@ const createAccount = {
   }
 }
 
-
-export default createAccount;
-
-// create: async () => {
-//   const externalTasks = await fetchExternalTasks();
-//   console.log(externalTasks);
-//   client.subscribe("Create Account", async function ({ task, taskService }) {
-//     let variable = new Variables();       
-//     try {
-//       await saveToDb('CreateAccount', task);
-
-//       variable.set("accCreated", true);        
-//       await taskService.complete(task, variable);
-//     } catch (error) {
-//       variable.set("accCreated", false);        
-//       await taskService.complete(task, variable);
-//       errorHandler(error, taskService, task);
-//     };
-//   });
-// }, 
+export default ExternalTask;
