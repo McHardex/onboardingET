@@ -1,4 +1,4 @@
-import createAccount from './createAccount';
+import tasks from './tasks';
 import createAccountError from './createAccountError';
 import validateId from './validateId';
 import upgradeToWta from './upgradeToWta';
@@ -10,7 +10,7 @@ import accountOpeningActivities from './accountOpeningActivities';
 import rejectedTask from './rejectedTaskRecord';
 
 const externalTasks = {
-    createAccount: createAccount.create,
+    startProcess: tasks.startProcess,
     notifyOnAccountOpeningError: createAccountError.notify,
     validateId: validateId.validate,
     upgrade: upgradeToWta.upgrade,
