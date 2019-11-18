@@ -9,12 +9,12 @@ module.exports = {
       },
       taskId: {
         allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        unique: true
       },
       topicName: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true
       },
       inputVariable: {
         allowNull: true,
@@ -32,7 +32,6 @@ module.exports = {
       activityId: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
       },
       tenantId: {
         allowNull: true,
@@ -42,15 +41,13 @@ module.exports = {
       activityInstanceId: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
       },
       executionId: {
         allowNull: false,
         type: Sequelize.UUID,
-        unique: true,
       },
       lockExpirationTime: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
       },
       processDefinitionId: {
