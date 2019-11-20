@@ -4,11 +4,10 @@ import { CronJob } from 'cron';
 import chalk from 'chalk';
 
 const app = express();
-
 const PORT = 4000;
 
+// restart process every one minute
 const job = new CronJob('0 */1 * * * *', () => {
-    console.log('should run job every 1 minute');
     externalTasks.startProcess();
 });
 

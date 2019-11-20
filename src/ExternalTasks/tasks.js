@@ -2,8 +2,10 @@ import { Variables } from "camunda-external-task-client-js";
 import { client } from '../helpers/client';
 import { errorHandler, taskError } from '../helpers/errorHandler';
 import fetchExternalTasks from '../helpers/getExternalTasks';
+import afterAlienWorker from '../helpers/afterAlienWorker';
 import saveToDb from '../helpers/saveToDb';
-import afterAlienWorker from './afterAlienWorker';
+import updateDb from '../helpers/updateDb';
+import chalk from "chalk";
 
 const topicNames = [];
 const ExternalTask = {
@@ -12,8 +14,12 @@ const ExternalTask = {
     // Fetch active external tasks from camunda
     const res = await fetchExternalTasks();
 
+    if (!res.length > 0) {
+      console.log(chalk.blue('No Active task yet'));
+      return;
+    }
     // Persist each instance of an external task in the db
-    for(const tasks of res) {
+    for (const tasks of res) {
       await saveToDb(tasks);
     }
 
@@ -23,29 +29,33 @@ const ExternalTask = {
         return topic;
       }
     });
-    
     // Subscribe to topics
-    for (const item of newTopics) {
-      topicNames.push(item.topicName);
+    for (const topic of newTopics) {
+      topicNames.push(topic.topicName);
       try {
-        client.subscribe(item.topicName, async function ({ task, taskService }) {
+        client.subscribe(topic.topicName, async function ({ task, taskService }) {
           const variable = new Variables();
           const data = await afterAlienWorker.pickup();
 
           for (const item of data) {
-            const variableKey = Object.keys(item.inputVariable);
-            const variableValue = Object.values(item.inputVariable);
-            variable.set(variableKey, variableValue[0]);
-
             if (task.id === item.taskId) {
-              await taskService.complete(task, variable);
+              if (item.inputVariable === null) {
+                await taskService.complete(task);
+                await updateDb(item.taskId);
+              } else {
+                const variableKey = Object.keys(item.inputVariable);
+                const variableValue = Object.values(item.inputVariable);
+                variable.set(variableKey, variableValue[0]);
+
+                await taskService.complete(task, variable);
+                await updateDb(item.taskId);
+              }
             }
           }
         });
       } catch (error) {
         errorHandler(error);
       }
-      return topicNames;
     }
   }
 }

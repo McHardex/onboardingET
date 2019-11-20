@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const ExternalTasks = sequelize.define('ExternalTasks', {
     taskId: DataTypes.UUID,
     topicName: DataTypes.STRING,
+    isCompleted: DataTypes.BOOLEAN,
     inputVariable: DataTypes.JSONB,
     readyForPickup: DataTypes.STRING,
     responseCode: DataTypes.INTEGER,

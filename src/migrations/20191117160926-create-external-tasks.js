@@ -16,6 +16,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
       },
+      isCompleted: {
+        allowNull: false,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       inputVariable: {
         allowNull: true,
         type: Sequelize.JSONB,

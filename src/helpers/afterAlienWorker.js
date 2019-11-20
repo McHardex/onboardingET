@@ -9,7 +9,8 @@ const afterAlienWorker = {
         const pickup = await ExternalTasks.findAll({
             raw: true,
             where: {
-                readyForPickup: "Y"
+                readyForPickup: "Y",
+                isCompleted: false
             },
         });
 
