@@ -72,7 +72,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       workerId: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
       },
       priority: {

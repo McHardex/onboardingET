@@ -7,31 +7,33 @@ import saveToDb from '../helpers/saveToDb';
 import updateDb from '../helpers/updateDb';
 import chalk from "chalk";
 
-const topicNames = [];
+const topicNames = new Set();
 const ExternalTask = {
   startProcess: async () => {
 
     // Fetch active external tasks from camunda
     const res = await fetchExternalTasks();
-
+    
     if (!res.length > 0) {
       console.log(chalk.blue('No Active task yet'));
       return;
     }
+    
     // Persist each instance of an external task in the db
     for (const tasks of res) {
       await saveToDb(tasks);
     }
-
+    
     // Filter topics to avoid adding duplicates
     const newTopics = await res.filter(topic => {
-      if (!topicNames.includes(topic.topicName)) {
+      if (!topicNames.has(topic.topicName)) {
         return topic;
       }
     });
+
     // Subscribe to topics
     for (const topic of newTopics) {
-      topicNames.push(topic.topicName);
+      topicNames.add(topic.topicName);
       try {
         client.subscribe(topic.topicName, async function ({ task, taskService }) {
           const variable = new Variables();
@@ -40,7 +42,7 @@ const ExternalTask = {
           for (const item of data) {
             if (task.id === item.taskId) {
               if (item.inputVariable === null) {
-                await taskService.complete(task);
+                Promise.all([await taskService.complete(task)])
                 await updateDb(item.taskId);
               } else {
                 const variableKey = Object.keys(item.inputVariable);
