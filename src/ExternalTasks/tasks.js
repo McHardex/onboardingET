@@ -42,13 +42,12 @@ const ExternalTask = {
           for (const item of data) {
             if (task.id === item.taskId) {
               if (item.inputVariable === null) {
-                Promise.all([await taskService.complete(task)])
+                await taskService.complete(task);
                 await updateDb(item.taskId);
               } else {
                 const variableKey = Object.keys(item.inputVariable);
                 const variableValue = Object.values(item.inputVariable);
                 variable.set(variableKey, variableValue[0]);
-
                 await taskService.complete(task, variable);
                 await updateDb(item.taskId);
               }
@@ -56,7 +55,7 @@ const ExternalTask = {
           }
         });
       } catch (error) {
-        errorHandler(error);
+        await errorHandler(error);
       }
     }
   }
