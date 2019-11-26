@@ -15,7 +15,7 @@ const ExternalTask = {
     const res = await fetchExternalTasks();
 
     if (!res.length > 0) {
-      console.log(chalk.blue('No Active task yet'));
+      console.log(chalk.grey('No Active task yet'));
       return;
     }
     // Persist each instance of an external task in the db
@@ -46,7 +46,6 @@ const ExternalTask = {
                 const variableKey = Object.keys(item.inputVariable);
                 const variableValue = Object.values(item.inputVariable);
                 variable.set(variableKey, variableValue[0]);
-
                 await taskService.complete(task, variable);
                 await updateDb(item.taskId);
               }

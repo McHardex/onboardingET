@@ -6,7 +6,7 @@ const fetchExternalTasks = async () => {
         const res = await axios.get('http://localhost:8080/engine-rest/external-task');
         return res.data;
     } catch (error) {
-        console.log(chalk.red(error.message));
+        console.log(chalk.grey(error.message));
     }
 };
 
