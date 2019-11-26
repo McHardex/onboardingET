@@ -7,7 +7,7 @@ export const errorHandler = async (error, taskService, task, variables) => {
             await taskService.handleBpmnError(task, "BPMNError_Code", "Error message", variables);
             break;
         default:
-            console.log(chalk.grey(error.message));
+            console.log(chalk.red(error.message));
             break;
     }
 };

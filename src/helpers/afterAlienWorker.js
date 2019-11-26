@@ -15,7 +15,7 @@ const afterAlienWorker = {
         });
 
         if (!pickup.length > 0) {
-            console.log(chalk.grey('No task ready for pickup yet'));
+            console.log(chalk.red('No task ready for pickup yet'));
             return;
         }
         return pickup;
