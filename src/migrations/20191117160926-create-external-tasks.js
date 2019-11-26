@@ -21,9 +21,13 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: false
       },
+      variables: {
+        allowNull: true,
+        type: Sequelize.JSON,
+      },
       inputVariable: {
         allowNull: true,
-        type: Sequelize.JSONB,
+        type: Sequelize.JSON,
       },
       readyForPickup: {
         allowNull: true,

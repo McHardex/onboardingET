@@ -1,8 +1,7 @@
 import db from '../models/index';
 import chalk from 'chalk';
 
-
-const saveToDb = async (task) => {
+const saveToDb = async (task, variables) => {
   try {
     const {
       id,
@@ -28,6 +27,7 @@ const saveToDb = async (task) => {
       taskId: id,
       topicName,
       activityId,
+      variables,
       activityInstanceId,
       errorMessage,
       errorDetails,
@@ -45,7 +45,11 @@ const saveToDb = async (task) => {
     });
     return insertToDB;
   } catch(error) {
-    console.log(chalk.grey('Already persisted process in the database'));
+    if (error.message === 'Validation error') {
+      console.log(chalk.grey('Duplicate: Already persisted data in the database'));
+    } else {
+      console.log(error.message);
+    }
   }
 };
 

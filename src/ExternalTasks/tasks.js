@@ -13,14 +13,9 @@ const ExternalTask = {
 
     // Fetch active external tasks from camunda
     const res = await fetchExternalTasks();
-
-    if (!res.length > 0) {
+    if (res === undefined || !res.length > 0) {
       console.log(chalk.grey('No Active task yet'));
       return;
-    }
-    // Persist each instance of an external task in the db
-    for (const tasks of res) {
-      await saveToDb(tasks);
     }
 
     // Filter topics to avoid adding duplicates
@@ -34,9 +29,13 @@ const ExternalTask = {
       topicNames.push(topic.topicName);
       try {
         client.subscribe(topic.topicName, async function ({ task, taskService }) {
+          const allVariables = task.variables.getAll();
+          // Persist each instance of an external task in the db
+          for (const tasks of res) {
+            await saveToDb(tasks, allVariables);
+          }
           const variable = new Variables();
           const data = await afterAlienWorker.pickup();
-
           for (const item of data) {
             if (task.id === item.taskId) {
               if (item.inputVariable === null) {

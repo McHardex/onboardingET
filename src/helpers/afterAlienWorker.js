@@ -2,7 +2,6 @@ import db from '../models/index';
 import chalk from 'chalk';
 
 const { ExternalTasks } = db;
-
 const afterAlienWorker = {
     pickup: async () => {
         // Picks up after alien worker updates the db
@@ -10,7 +9,7 @@ const afterAlienWorker = {
             raw: true,
             where: {
                 readyForPickup: "Y",
-                isCompleted: false
+                isCompleted: 0
             },
         });
 

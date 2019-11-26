@@ -1,5 +1,4 @@
-require('dotenv').config;
-
+require('dotenv').config();
 module.exports = {
   // if using an online database like elephantSQL
   // development: {
@@ -8,27 +7,29 @@ module.exports = {
   
 
   development: {
-    username: 'postgres',
-    password: 'h0ttestt',
-    database: 'onboarding',
-    host: 'localhost',
-    dialect: 'postgres',
-    logging: false
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASS,
+    database: process.env.DEV_DB_NAME,
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT,
+    logging: false,
+    baseUrl: process.env.BASE_URL,
   },
 
   test: {
-    username: 'postgres',
-    password: 'h0ttestt',
-    database: 'onboarding_test',
-    host: 'localhost',
-    dialect: 'postgres'
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASS,
+    database: process.env.TEST_DB,
+    host: process.env.DB_HOST,
+    dialect: process.env.DB_DIALECT
   },
 
   production: {
-    username: process.env.DB_USER,
+    username: process.env.DB_USERNAME,
     password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    database: process.env.PROD_DB_URL,
     host: process.env.DB_HOST,
-    dialect: 'postgres'
+    dialect: process.env.DB_DIALECT,
+    baseUrl: process.env.PROD_BASE_URL,
   }
 };
