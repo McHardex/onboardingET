@@ -45,7 +45,7 @@ const saveToDb = async (task) => {
     });
     return insertToDB;
   } catch(error) {
-    console.log(chalk.grey('Already persisted process in the database'));
+    console.log(chalk.red('Already persisted process in the database'));
   }
 };
 
