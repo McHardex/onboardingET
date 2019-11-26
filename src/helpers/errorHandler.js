@@ -1,3 +1,5 @@
+import chalk from 'chalk';
+
 export const errorHandler = async (error, taskService, task, variables) => {
     const { errorCode } = error;
     switch (errorCode) {
@@ -5,7 +7,7 @@ export const errorHandler = async (error, taskService, task, variables) => {
             await taskService.handleBpmnError(task, "BPMNError_Code", "Error message", variables);
             break;
         default:
-            console.log(error.message, 'error');
+            console.log(chalk.red(error.message));
             break;
     }
 };

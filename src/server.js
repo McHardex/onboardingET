@@ -1,22 +1,18 @@
 import express from 'express';
-import externalTasks from './ExternalTasks';
+import externalTasks from './ExternalTasks/tasks';
+import { CronJob } from 'cron';
+import chalk from 'chalk';
 
 const app = express();
-
 const PORT = 4000;
 
-// External tasks
-externalTasks.rejectedTaskRecord()
-externalTasks.createAccount();
-externalTasks.notifyOnAccountOpeningError(),
-externalTasks.validateId(),
-externalTasks.upgrade(),
-externalTasks.requestDebitCard()
-externalTasks.registerUssd(),
-externalTasks.sendSmsAndEmailAlert(),
-externalTasks.sendAccountNumber(),
-externalTasks.accountOpeningActivities()
+// restart process every one minute
+const job = new CronJob('0 */1 * * * *', () => {
+    externalTasks.startProcess();
+});
+
+job.start();
 
 app.listen(PORT, () => {
-    console.log('App listening on PORT', PORT);
+    console.log(chalk.green('App listening on PORT', PORT));
 });

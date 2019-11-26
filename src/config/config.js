@@ -5,13 +5,15 @@ module.exports = {
   // development: {
   //   use_ env_variable: 'DATABASE_URL'
   // }
+  
 
   development: {
     username: 'postgres',
     password: 'h0ttestt',
     database: 'onboarding',
     host: 'localhost',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
 
   test: {
