@@ -1,17 +1,16 @@
 import express from 'express';
 import externalTasks from './ExternalTasks/tasks';
-import { CronJob } from 'cron';
 import chalk from 'chalk';
+import cron from 'node-cron';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const PORT = 4000;
 
-// restart process every one minute
-const job = new CronJob('0 */1 * * * *', () => {
+cron.schedule(process.env.CRON_TIME, () => {
     externalTasks.startProcess();
 });
-
-job.start();
 
 app.listen(PORT, () => {
     console.log(chalk.green('App listening on PORT', PORT));
